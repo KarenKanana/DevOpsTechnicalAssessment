@@ -12,7 +12,7 @@ body, html {
     overflow: hidden; 
 }
 
-hero-section {
+.hero-section {
     height: 100vh;
     display: flex;
     justify-content: center;
@@ -125,5 +125,26 @@ hero-section {
     100% {
         transform: translateY(100vh) translateX(50px);
         opacity: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .content {
+        flex-direction: column;  
+        text-align: center;
+    }
+
+    .profile-container {
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
+
+    .profile-image {
+        width: 350px; 
+        height: 350px;
+    }
+
+    .text-content h1 {
+        font-size: 2rem;
     }
 }
