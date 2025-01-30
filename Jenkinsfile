@@ -17,7 +17,7 @@ pipeline {
         }
         stage('Clone Repository') {
             steps {
-                git 'https://github.com/KarenKanana/DevOpsTechnicalAssessment.git' 
+                git branch: 'main', url: 'git@github.com:KarenKanana/DevOpsTechnicalAssessment.git', credentialsId: 'github-ssh-key' 
             }
         }
         stage('Build Docker Image') {
