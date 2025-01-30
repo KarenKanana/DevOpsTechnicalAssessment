@@ -32,7 +32,7 @@ pipeline {
                     echo "IMAGE_NAME: $IMAGE_NAME"
                     echo "DOCKER_REPO: $DOCKER_REPO"
                     echo "BUILD_NUMBER: $BUILD_NUMBER"
-                    docker tag ${IMAGE_NAME}:latest ${DOCKER_REPO}/${IMAGE_NAME}:${BUILD_NUMBER}  // Tag with full path INCLUDING image name
+                    docker tag ${IMAGE_NAME}:latest ${DOCKER_REPO}/${IMAGE_NAME}:${BUILD_NUMBER}
                     docker push ${DOCKER_REPO}/${IMAGE_NAME}:${BUILD_NUMBER}  // Push with full path INCLUDING image name
                     
                    """
