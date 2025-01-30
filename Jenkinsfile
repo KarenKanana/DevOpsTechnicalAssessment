@@ -4,7 +4,8 @@ pipeline {
         IMAGE_NAME = 'my-app'
         GCP_PROJECT_ID = 'my-app-449417' 
         GCP_REGION = 'us-central1'  
-        GCP_REPO_NAME = 'my-app-repo'  
+        DOCKER_REPO = 'us-central1-docker.pkg.dev/my-app-449417/my-app-repo'
+  
     }
     stages {
         stage('Authenticate to Google Cloud') {
@@ -22,12 +23,15 @@ pipeline {
         }
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t gcr.io/${GCP_PROJECT_ID}/${GCP_REPO_NAME}:${BUILD_NUMBER} .'  
+                sh 'docker build -t $IMAGE_NAME .'  
             }
         }
         stage('Push Image to Artifact Registry') {
             steps {
-                sh 'docker push gcr.io/${GCP_PROJECT_ID}/${GCP_REPO_NAME}:${BUILD_NUMBER}'  
+                sh """
+                    docker tag $IMAGE_NAME:$BUILD_NUMBER
+                    docker push $DOCKER_REPO:$BUILD_NUMBER
+                """ 
             }
         }
         
