@@ -29,9 +29,13 @@ pipeline {
         stage('Push Image to Artifact Registry') {
             steps {
                 sh """
+                    echo "IMAGE_NAME: $IMAGE_NAME"
+                    echo "DOCKER_REPO: $DOCKER_REPO"
+                    echo "BUILD_NUMBER: $BUILD_NUMBER"
                     docker tag $IMAGE_NAME:latest $DOCKER_REPO:$BUILD_NUMBER
                     docker push $DOCKER_REPO:$BUILD_NUMBER
-                """ 
+                    
+                    """ 
             }
         }
         
