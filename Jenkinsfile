@@ -5,7 +5,9 @@ pipeline {
         IMAGE_NAME = 'my-app'
         GCP_PROJECT_ID = 'my-app-449417' 
         GCP_REGION = 'us-central1'  
-        DOCKER_REPO = 'us-central1-docker.pkg.dev/my-app-449417/my-app-repo'
+        DOCKER_REPO = 'my-app-repo'
+        ARTIFACT_REGISTRY = "us-central1-docker.pkg.dev/${GCP_PROJECT_ID}/${DOCKER_REPO}"
+        IMAGE_TAG = "${BUILD_NUMBER}"
         IMAGE_URI = "${ARTIFACT_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}"
         SERVICE_NAME = 'my-app'
     }
@@ -34,8 +36,8 @@ pipeline {
                     echo "IMAGE_NAME: $IMAGE_NAME"
                     echo "DOCKER_REPO: $DOCKER_REPO"
                     echo "BUILD_NUMBER: $BUILD_NUMBER"
-                    docker tag ${IMAGE_NAME}:latest ${DOCKER_REPO}/${IMAGE_NAME}:${BUILD_NUMBER}
-                    docker push ${DOCKER_REPO}/${IMAGE_NAME}:${BUILD_NUMBER}
+                    docker tag ${IMAGE_NAME}:latest ${IMAGE_URI} // Tag with full URI
+                    docker push ${IMAGE_URI} 
                 """
             }
         }
