@@ -36,7 +36,7 @@ pipeline {
                     echo "IMAGE_NAME: $IMAGE_NAME"
                     echo "DOCKER_REPO: $DOCKER_REPO"
                     echo "BUILD_NUMBER: $BUILD_NUMBER"
-                    docker tag ${IMAGE_NAME}:latest ${IMAGE_URI} // Tag with full URI
+                    docker tag ${IMAGE_NAME}:latest ${IMAGE_URI}
                     docker push ${IMAGE_URI} 
                 """
             }
