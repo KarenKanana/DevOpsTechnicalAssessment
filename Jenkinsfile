@@ -5,7 +5,8 @@ pipeline {
         GCP_PROJECT_ID = 'my-app-449417' 
         GCP_REGION = 'us-central1'  
         DOCKER_REPO = 'us-central1-docker.pkg.dev/my-app-449417/my-app-repo'
-  
+        IMAGE_URI = "${ARTIFACT_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}"
+        SERVICE_NAME = 'my-app'
     }
     stages {
         stage('Authenticate to Google Cloud') {
@@ -37,6 +38,31 @@ pipeline {
                 """
             }
         }
-        
+        stage('Deploy to Cloud Run') {
+            steps {
+                script {
+                    sh """
+                    gcloud run deploy ${SERVICE_NAME} \
+                        --image=${IMAGE_URI} \
+                        --platform=managed \
+                        --region=${REGION} \
+                        --allow-unauthenticated
+                    """
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            echo "Deployment successful! 🚀"
+            sh "gcloud run services describe ${SERVICE_NAME} --region=${REGION} --format='value(status.url)'"
+        }
+        failure {
+            echo "Deployment failed! ❌ Check logs for errors."
+        }
     }
 }
+        
+
+
