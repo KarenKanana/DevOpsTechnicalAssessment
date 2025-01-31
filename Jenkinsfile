@@ -1,6 +1,7 @@
 pipeline {
     agent any
     environment {
+        REGION = "us-central1"
         IMAGE_NAME = 'my-app'
         GCP_PROJECT_ID = 'my-app-449417' 
         GCP_REGION = 'us-central1'  
